@@ -1,0 +1,13 @@
+{
+  "name": "Desafio Saitama",
+  "short_name": "Saitama",
+  "description": "Desafio Saitama — 100 flexões, 100 abdominais, 100 agachamentos e 10 km por dia.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#070707",
+  "theme_color": "#e31b23",
+  "lang": "pt-BR",
+  "icons": [{"src":"icons/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}

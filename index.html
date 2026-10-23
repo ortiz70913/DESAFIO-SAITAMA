@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta name="theme-color" content="#e31b23">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Saitama">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon.svg">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Desafio Saitama — One Punch Man</title>
+<style>
+:root{
+ --red:#e31b23;--red2:#8e0d13;--yellow:#ffd21c;--gold:#ffb800;
+ --black:#070707;--dark:#121212;--panel:#1b1b1b;--gray:#34383d;
+ --white:#fff;--green:#19c463;--blue:#2aa9e0;--orange:#ff7900;--purple:#9567ff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#070707;color:#fff;font-family:Arial,Helvetica,sans-serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.07;
+ background:repeating-linear-gradient(135deg,#fff 0 1px,transparent 1px 9px)}
+.wrap{max-width:1550px;margin:auto;padding:14px}
+.hero{height:285px;border:3px solid #050505;position:relative;overflow:hidden;
+ background:
+ linear-gradient(105deg,#070707 0 38%,transparent 38%),
+ linear-gradient(135deg,#111 0 48%,#d91620 48% 69%,#0b0b0b 69%);
+ box-shadow:8px 8px 0 var(--yellow)}
+.hero:before{content:"";position:absolute;left:35%;top:-80px;width:25%;height:450px;
+ background:
+ linear-gradient(120deg,transparent 0 20%,#e9e9e9 20% 28%,transparent 28% 37%,
+ #f3c91b 37% 63%,#c81720 63% 76%,transparent 76%);
+ transform:skew(-13deg);opacity:.96}
+.hero:after{content:"TREINO TODO DIA!";position:absolute;right:3.5%;top:18px;
+ background:var(--yellow);color:#111;padding:9px 18px;font-size:23px;font-weight:1000;
+ transform:rotate(-4deg);border:4px solid #111;box-shadow:5px 5px 0 #111;z-index:4}
+.heroText{position:absolute;left:25px;top:22px;width:36%;z-index:5}
+.kicker{display:inline-block;background:var(--yellow);color:#111;padding:5px 9px;font-weight:1000;
+ border:3px solid #111;transform:skew(-8deg);font-size:11px}
+h1{font-family:"Arial Black",Arial,sans-serif;font-style:italic;font-size:clamp(39px,5.4vw,68px);
+ line-height:.78;margin:17px 0 9px;text-transform:uppercase;text-shadow:5px 5px 0 #111;letter-spacing:-3px}
+h1 span{color:var(--red);display:block}
+.heroQuote{font-size:14px;font-weight:900;font-style:italic;max-width:280px;line-height:1.2}
+.topStats{position:absolute;right:18px;top:64px;width:43%;z-index:5;background:#080808ed;
+ border:3px solid var(--red);padding:11px;box-shadow:5px 5px 0 #000}
+.topTitle{display:flex;justify-content:space-between;align-items:center;font-size:19px;font-weight:1000;margin-bottom:7px}
+.topTitle b{font-size:24px;color:#fff}.bigProgress{height:15px;background:#555;border-radius:20px;
+ overflow:hidden;border:2px solid #000}.bigProgress i{display:block;width:0;height:100%;
+ background:linear-gradient(90deg,var(--yellow),#ffb300)}
+.statGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.stat{background:#101010;border:1px solid #555;padding:7px;text-align:center}
+.stat b{display:block;font-size:17px}.stat small{font-size:8px;color:#ccc}
+.stat.accent b{color:var(--yellow)}
+.main{margin-top:15px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.section{background:var(--panel);border:3px solid #050505;padding:10px;box-shadow:4px 4px 0 #000}
+.sectionTitle{background:var(--yellow);color:#111;font-size:16px;font-weight:1000;padding:7px 10px;margin:-10px -10px 10px;
+ border-bottom:3px solid #111;clip-path:polygon(0 0,96% 0,100% 50%,96% 100%,0 100%)}
+.weekPlan{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.runCard{min-height:118px;border:2px solid #111;background:#292d31;padding:8px;text-align:center}
+.runCard .day{font-size:11px;font-weight:1000;background:var(--yellow);color:#111;padding:4px;margin:-8px -8px 7px}
+.runCard b{font-size:13px;display:block}.runCard small{display:block;color:#ddd;font-size:9px;line-height:1.3;margin-top:4px}
+.runCard.seg{border-bottom:4px solid var(--yellow)}.runCard.ter{border-bottom:4px solid var(--red)}.runCard.qua{border-bottom:4px solid var(--blue)}
+.runCard.qui{border-bottom:4px solid var(--orange)}.runCard.sex{border-bottom:4px solid var(--purple)}.runCard.sab{border-bottom:4px solid var(--green)}
+.runCard.dom{border-bottom:4px solid #bbb}
+.calArea{margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.month{background:#111;border:2px solid #4b4b4b;padding:8px}
+.monthHead{display:flex;justify-content:center;align-items:center;font-weight:1000;font-size:18px;margin-bottom:7px}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.week div{text-align:center;font-size:9px;color:#aaa;padding:3px}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cell{min-height:37px;background:#343a40;border:1px solid #111;padding:4px;cursor:pointer;position:relative;font-size:11px}
+.cell:hover{outline:2px solid var(--yellow);z-index:2}.cell.empty{background:transparent;border:0;cursor:default}
+.cell.today{outline:2px solid var(--blue)}.cell.complete{background:#164d2c}.cell.selected{outline:3px solid var(--yellow)}
+.cell .tick{position:absolute;right:3px;bottom:2px;color:var(--green);font-weight:1000}
+.cell .mini{font-size:7px;color:#ddd;margin-top:3px}.cell.complete .mini{color:#b8ffcf}
+.side{grid-column:1 / -1;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.details{background:#f3f3f3;color:#111;border:3px solid #111;padding:10px;box-shadow:5px 5px 0 var(--red)}
+.detailTitle{font-size:20px;font-weight:1000;margin-bottom:8px}
+.objectives{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.obj{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #bbb;padding:8px;font-weight:900}
+.obj input{width:21px;height:21px;accent-color:var(--green)}
+.runDetail{margin-top:9px;border:2px solid #222;background:#fff;padding:9px}
+.runDetail b{font-size:15px}.runDetail p{margin:4px 0;font-size:11px}
+.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.btn{border:2px solid #111;background:var(--red);color:#fff;padding:9px 11px;font-weight:1000;cursor:pointer}
+.btn.yellow{background:var(--yellow);color:#111}.btn.gray{background:#222}
+.bottom{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px}
+.achievements{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.medal{background:#101010;border:2px solid #444;padding:8px;text-align:center;opacity:.4}
+.medal.on{opacity:1;border-color:var(--yellow);box-shadow:2px 2px 0 var(--red)}
+.medal b{display:block;font-size:22px}.medal small{font-size:8px;color:#ccc}
+.totalStats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.total{background:#111;border:1px solid #555;text-align:center;padding:10px}.total b{display:block;font-size:20px;color:var(--yellow)}.total small{font-size:9px;color:#bbb}
+.legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;font-size:9px;color:#bbb}
+@media(max-width:1100px){.topStats{width:48%}.weekPlan{grid-template-columns:repeat(4,1fr)}.main{grid-template-columns:1fr}.side{grid-template-columns:1fr}.bottom{grid-template-columns:1fr}.calArea{grid-template-columns:1fr}}
+@media(max-width:650px){
+ .hero{height:auto;min-height:485px}
+ .hero:before{left:22%;width:42%;opacity:.7}
+ .heroText{width:90%;left:16px;top:18px}
+ h1{font-size:48px}
+ .heroQuote{font-size:12px}
+ .hero:after{top:190px;right:12px;font-size:18px}
+ .topStats{position:absolute;left:12px;right:12px;top:245px;width:auto}
+ .statGrid{grid-template-columns:repeat(2,1fr)}
+ .weekPlan{grid-template-columns:repeat(2,1fr)}
+ .objectives{grid-template-columns:1fr}
+ .achievements{grid-template-columns:repeat(2,1fr)}
+}
+.zone-table{min-width:900px}.zone-wrap{overflow-x:auto}
+</style>
+</head>
+<body>
+<button id="installBtn" style="display:none;position:fixed;right:16px;bottom:16px;z-index:9999;background:#ffd21c;color:#070707;border:3px solid #070707;border-radius:14px;padding:12px 16px;font-weight:900;box-shadow:0 8px 24px #0008">📲 INSTALAR APP</button>
+<div class="wrap">
+<section class="hero">
+ <div class="heroText">
+  <span class="kicker">ONE PUNCH MAN • DESAFIO SAITAMA</span>
+  <h1>DESAFIO <span>SAITAMA</span></h1>
+  <div style="font-size:26px;font-weight:1000">100 + 100 + 100 + 10 KM</div>
+  <div class="heroQuote">“DISCIPLINA TODOS OS DIAS. RESULTADOS EXTRAORDINÁRIOS.”</div>
+ </div>
+ <div class="topStats">
+  <div class="topTitle"><span>PROGRESSO GERAL</span><b id="pct">0%</b></div>
+  <div class="bigProgress"><i id="bar"></i></div>
+  <div class="statGrid">
+   <div class="stat"><b>🏃 <span id="km">0</span></b><small>DISTÂNCIA / META 920 KM</small></div>
+   <div class="stat accent"><b>💪 <span id="push">0</span></b><small>FLEXÕES</small></div>
+   <div class="stat accent"><b>🔥 <span id="sit">0</span></b><small>ABDOMINAIS</small></div>
+   <div class="stat accent"><b>🦵 <span id="squat">0</span></b><small>AGACHAMENTOS</small></div>
+   <div class="stat"><b id="days">0</b><small>DIAS CONCLUÍDOS</small></div>
+   <div class="stat"><b id="streak">0</b><small>STREAK ATUAL</small></div>
+   <div class="stat"><b id="best">0</b><small>MAIOR STREAK</small></div>
+   <div class="stat"><b>🏆</b><small>DESAFIO 92 DIAS</small></div>
+  </div>
+ </div>
+</section>
+
+<section class="section" style="margin-top:15px">
+ <div class="sectionTitle">TREINO DIÁRIO DO SAITAMA</div>
+ <div class="weekPlan">
+  <div class="runCard seg"><div class="day">TODOS OS DIAS</div><b>100 FLEXÕES</b><small>Meta diária</small></div>
+  <div class="runCard ter"><div class="day">TODOS OS DIAS</div><b>100 ABDOMINAIS</b><small>Meta diária</small></div>
+  <div class="runCard qua"><div class="day">TODOS OS DIAS</div><b>100 AGACHAMENTOS</b><small>Meta diária</small></div>
+  <div class="runCard sex"><div class="day">TODOS OS DIAS</div><b>10 KM</b><small>Corrida/caminhada conforme o dia</small></div>
+ </div>
+</section>
+
+<section class="section" style="margin-top:10px">
+ <div class="sectionTitle">PLANO SEMANAL DE CORRIDA — 10 KM FIXOS</div>
+ <div class="weekPlan">
+  <div class="runCard seg"><div class="day">SEG</div><b>Z3</b><small>Ritmo ~6:00/km<br>~1.250 kcal</small></div>
+  <div class="runCard ter"><div class="day">TER</div><b>HIIT Z4/Z1</b><small>Tiros + recuperação<br>~1.280 kcal</small></div>
+  <div class="runCard qua"><div class="day">QUA</div><b>Z2</b><small>Regenerativo ~6:50/km<br>~1.200 kcal</small></div>
+  <div class="runCard qui"><div class="day">QUI</div><b>FARTLEK</b><small>Z2/Z3/Z4<br>~1.260 kcal</small></div>
+  <div class="runCard sex"><div class="day">SEX</div><b>PROGRESSIVO</b><small>Z2 → Z4<br>~1.270 kcal</small></div>
+  <div class="runCard sab"><div class="day">SÁB</div><b>Z3</b><small>Longão ritmado<br>~1.250 kcal</small></div>
+  <div class="runCard dom"><div class="day">DOM</div><b>CAMINHADA</b><small>Z1/Z2 • 100–110 min<br>~1.080 kcal</small></div>
+ </div>
+</section>
+
+<section class="section" style="margin-top:10px">
+ <div class="sectionTitle">ZONAS DE TREINO • PACE E TEMPO PARA 10 KM</div>
+ <div class="zone-wrap">
+  <table class="zone-table" style="width:100%;border-collapse:collapse;background:#111;color:#fff;border-radius:12px;overflow:hidden">
+   <thead>
+    <tr style="background:#e31b23;color:#fff">
+     <th style="padding:11px;text-align:left">Zona</th>
+     <th style="padding:11px;text-align:left">Tipo de esforço</th>
+     <th style="padding:11px;text-align:left">Margem de intensidade</th>
+     <th style="padding:11px;text-align:left">Pace</th>
+     <th style="padding:11px;text-align:left">Tempo mínimo – máximo em 10 km</th>
+     <th style="padding:11px;text-align:left">Objetivo</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr><td style="padding:10px;font-weight:800;color:#ffd21c">Z1</td><td style="padding:10px">Muito Leve</td><td style="padding:10px">&gt;115% do Limiar</td><td style="padding:10px">Mais lento que 06:55/km</td><td style="padding:10px"><b>&gt; 69:10</b> (sem máximo definido)</td><td style="padding:10px">Recuperação ativa e aquecimento</td></tr>
+    <tr style="background:#1b1b1b"><td style="padding:10px;font-weight:800;color:#ffd21c">Z2</td><td style="padding:10px">Leve / Confortável</td><td style="padding:10px">105% a 115% do Limiar</td><td style="padding:10px">06:18 a 06:55/km</td><td style="padding:10px"><b>63:00 a 69:10</b></td><td style="padding:10px">Base aeróbica e resistência</td></tr>
+    <tr><td style="padding:10px;font-weight:800;color:#ffd21c">Z3</td><td style="padding:10px">Moderado</td><td style="padding:10px">101% a 105% do Limiar</td><td style="padding:10px">06:03 a 06:17/km</td><td style="padding:10px"><b>60:30 a 62:50</b></td><td style="padding:10px">Ritmo de maratona / eficiência aeróbica</td></tr>
+    <tr style="background:#1b1b1b"><td style="padding:10px;font-weight:800;color:#ffd21c">Z4</td><td style="padding:10px">Forte (Limiar)</td><td style="padding:10px">96% a 100% do Limiar</td><td style="padding:10px">05:45 a 06:02/km</td><td style="padding:10px"><b>57:30 a 60:20</b></td><td style="padding:10px">Tiros longos / tolerância ao lactato</td></tr>
+    <tr><td style="padding:10px;font-weight:800;color:#ffd21c">Z5</td><td style="padding:10px">Muito Forte / Máximo</td><td style="padding:10px">&lt;95% do Limiar</td><td style="padding:10px">Mais rápido que 05:45/km</td><td style="padding:10px"><b>&lt; 57:30</b> (sem mínimo definido)</td><td style="padding:10px">Tiros curtos / velocidade e VO₂ máximo</td></tr>
+   </tbody>
+  </table>
+ </div>
+ <div style="margin-top:10px;padding:10px 12px;border-left:4px solid #ffd21c;background:#1b1b1b;border-radius:8px;font-size:13px;color:#ddd">⏱️ <b>Referência:</b> os tempos acima são calculados para completar os <b>10 km</b> mantendo o pace dentro da faixa de cada zona. Nas zonas abertas (Z1 e Z5), o limite é apenas de um lado.</div>
+</section>
+
+<section class="section" style="margin-top:10px">
+ <div class="sectionTitle">CALENDÁRIO DO DESAFIO</div>
+ <div class="calArea" id="calendars"></div>
+ <div class="legend">
+  <span>🟢 Dia completo</span><span>🟡 Dia selecionado</span><span>🔵 Hoje</span>
+  <span>FLEX = flexões</span><span>ABD = abdominais</span><span>AG = agachamentos</span><span>10K = corrida</span>
+ </div>
+</section>
+
+<section class="side" style="margin-top:10px">
+ <div class="details">
+  <div class="detailTitle" id="selectedTitle">DETALHES DO DIA</div>
+  <div class="objectives">
+   <label class="obj">💪 100 Flexões <input id="oPush" type="checkbox" onchange="setObj('push',this.checked)"></label>
+   <label class="obj">🔥 100 Abdominais <input id="oSit" type="checkbox" onchange="setObj('sit',this.checked)"></label>
+   <label class="obj">🦵 100 Agachamentos <input id="oSquat" type="checkbox" onchange="setObj('squat',this.checked)"></label>
+   <label class="obj">🏃 10 km de Corrida <input id="oRun" type="checkbox" onchange="setObj('run',this.checked)"></label>
+  </div>
+  <div class="runDetail"><b id="runName">TREINO DE CORRIDA DO DIA</b><p id="runInfo">Selecione uma data no calendário.</p></div>
+  <div class="actions">
+   <button class="btn yellow" onclick="completeSelected()">✓ MARCAR DIA COMO CONCLUÍDO</button>
+   <button class="btn" onclick="completeMonth()">✓ MARCAR MÊS</button>
+   <button class="btn gray" onclick="clearMonth()">LIMPAR MÊS</button>
+   <button class="btn gray" onclick="resetAll()">RESETAR DESAFIO</button>
+  </div>
+ </div>
+ <div class="section" style="box-shadow:none">
+  <div class="sectionTitle">CONQUISTAS</div>
+  <div class="achievements">
+   <div class="medal" id="m7"><b>🔥</b><small>7 dias consecutivos</small></div>
+   <div class="medal" id="m30"><b>⭐</b><small>30 dias consecutivos</small></div>
+   <div class="medal" id="m92"><b>🏆</b><small>92 dias completos</small></div>
+   <div class="medal" id="m100"><b>🔥</b><small>100 km de corrida</small></div>
+   <div class="medal" id="m500"><b>👊</b><small>500 km de corrida</small></div>
+   <div class="medal" id="m920"><b>🥇</b><small>920 km — desafio total</small></div>
+  </div>
+  <div class="sectionTitle" style="margin-top:14px">ESTATÍSTICAS TOTAIS</div>
+  <div class="totalStats">
+   <div class="total"><b id="tkm">0 km</b><small>corrida/caminhada</small></div>
+   <div class="total"><b id="tkcal">~0</b><small>kcal estimadas</small></div>
+   <div class="total"><b id="tdays">0</b><small>dias completos</small></div>
+  </div>
+ </div>
+</section>
+</div>
+
+<script>
+const YEAR=2026, months=[9,10,11], keys=["push","sit","squat","run"];
+const plan={
+0:{name:"CAMINHADA Z1/Z2",info:"10 km de caminhada firme • Z1: mais lento que 06:55 / Z2: 06:18–06:55 • ~100–110 min • ~1.080 kcal"},
+1:{name:"Z3 — RITMO ALVO",info:"10 km contínuos • Z3: 06:03–06:17/km • alvo aproximado ~6:00/km • ~60 min • ~1.250 kcal"},
+2:{name:"HIIT Z4/Z1",info:"10 km alternando tiros em Z4: 05:45–06:02/km e recuperação Z1: mais lento que 06:55/km • ~1.280 kcal"},
+3:{name:"Z2 — REGENERATIVO",info:"10 km leves em Z2: 06:18–06:55/km • referência ~6:50/km • ~68 min • ~1.200 kcal"},
+4:{name:"FARTLEK Z2/Z3/Z4",info:"10 km intercalando Z2: 06:18–06:55, Z3: 06:03–06:17 e Z4: 05:45–06:02/km • ~1.260 kcal"},
+5:{name:"PROGRESSIVO Z2 → Z4",info:"10 km acelerando de Z2: 06:18–06:55/km para Z4: 05:45–06:02/km • ~1.270 kcal"},
+6:{name:"Z3 — LONGÃO RITMADO",info:"10 km contínuos em Z3: 06:03–06:17/km • ~1.250 kcal"}
+};
+let data=JSON.parse(localStorage.getItem("saitamaOnePunch2026")||"{}"), selected=null;
+const pad=n=>String(n).padStart(2,"0");
+const key=(d)=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+function get(k){return data[k]||{}}
+function complete(k){let x=get(k);return keys.every(a=>x[a])}
+function save(){localStorage.setItem("saitamaOnePunch2026",JSON.stringify(data))}
+function renderCalendars(){
+ const root=document.getElementById("calendars");root.innerHTML="";
+ months.forEach(m=>{
+  const box=document.createElement("div");box.className="month";
+  box.innerHTML=`<div class="monthHead">${["OUTUBRO","NOVEMBRO","DEZEMBRO"][months.indexOf(m)]} 2026</div>
+  <div class="week"><div>DOM</div><div>SEG</div><div>TER</div><div>QUA</div><div>QUI</div><div>SEX</div><div>SÁB</div></div><div class="days"></div>`;
+  const days=box.querySelector(".days"), first=new Date(YEAR,m,1), last=new Date(YEAR,m+1,0);
+  for(let i=0;i<first.getDay();i++){let e=document.createElement("div");e.className="cell empty";days.appendChild(e)}
+  for(let d=1;d<=last.getDate();d++){
+   const dt=new Date(YEAR,m,d),k=key(dt),x=get(k),c=document.createElement("div");
+   c.className="cell"+(complete(k)?" complete":"")+(selected===k?" selected":"");
+   c.onclick=()=>selectDay(k);
+   c.innerHTML=`<b>${d}</b><div class="mini">${x.push?"✓FLEX ":""}${x.sit?"✓ABD ":""}${x.squat?"✓AG ":""}${x.run?"✓10K":""}</div>${complete(k)?'<span class="tick">✓</span>':""}`;
+   days.appendChild(c);
+  }
+  root.appendChild(box);
+ })
+}
+function selectDay(k){
+ selected=k;const dt=new Date(k+"T12:00:00"),x=get(k),p=plan[dt.getDay()];
+ document.getElementById("selectedTitle").textContent=`DETALHES DO DIA — ${dt.toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"2-digit",year:"numeric"}).toUpperCase()}`;
+ document.getElementById("runName").textContent="TREINO DE CORRIDA DO DIA — "+p.name;
+ document.getElementById("runInfo").textContent=p.info;
+ ["Push","Sit","Squat","Run"].forEach((n,i)=>document.getElementById("o"+n).checked=!!x[keys[i]]);
+ renderCalendars()
+}
+function setObj(o,v){if(!selected)return;data[selected]=get(selected);if(v)data[selected][o]=true;else delete data[selected][o];save();selectDay(selected);updateStats()}
+function completeSelected(){if(!selected)return;data[selected]={push:true,sit:true,squat:true,run:true};save();selectDay(selected);updateStats()}
+function completeMonth(){
+ if(!selected)return;
+ const m=new Date(selected+"T12:00:00").getMonth(),last=new Date(YEAR,m+1,0).getDate();
+ for(let d=1;d<=last;d++)data[key(new Date(YEAR,m,d))]={push:true,sit:true,squat:true,run:true};
+ save();renderCalendars();updateStats();selectDay(selected)
+}
+function clearMonth(){
+ if(!selected)return;
+ const m=new Date(selected+"T12:00:00").getMonth(),last=new Date(YEAR,m+1,0).getDate();
+ for(let d=1;d<=last;d++)delete data[key(new Date(YEAR,m,d))];
+ save();renderCalendars();updateStats();selectDay(selected)
+}
+function resetAll(){if(confirm("Apagar todo o progresso do Desafio Saitama?")){data={};selected=null;save();renderCalendars();updateStats();document.getElementById("selectedTitle").textContent="DETALHES DO DIA";document.getElementById("runName").textContent="TREINO DE CORRIDA DO DIA";document.getElementById("runInfo").textContent="Selecione uma data no calendário."}}
+function allDays(){let a=[];months.forEach(m=>{let last=new Date(YEAR,m+1,0).getDate();for(let d=1;d<=last;d++)a.push(key(new Date(YEAR,m,d)))});return a}
+function streaks(days){
+ let cur=0,best=0;
+ for(let k of days){if(complete(k)){cur++;best=Math.max(best,cur)}else cur=0}
+ let tail=0;for(let i=days.length-1;i>=0&&complete(days[i]);i--)tail++;
+ return [tail,best]
+}
+function updateStats(){
+ const days=allDays(), done=days.filter(complete), pct=Math.round(done.length/days.length*100);
+ let push=0,sit=0,squat=0,km=0,kcal=0;
+ days.forEach(k=>{let x=get(k),dt=new Date(k+"T12:00:00");if(x.push)push+=100;if(x.sit)sit+=100;if(x.squat)squat+=100;if(x.run){km+=10;kcal+=Number(plan[dt.getDay()].info.match(/~1\.([0-9]+)/)?.[1]||0)*10}});
+ const [cur,best]=streaks(days);
+ document.getElementById("pct").textContent=pct+"%";document.getElementById("bar").style.width=pct+"%";
+ document.getElementById("days").textContent=done.length;document.getElementById("streak").textContent=cur;document.getElementById("best").textContent=best;
+ document.getElementById("push").textContent=push.toLocaleString("pt-BR");document.getElementById("sit").textContent=sit.toLocaleString("pt-BR");document.getElementById("squat").textContent=squat.toLocaleString("pt-BR");document.getElementById("km").textContent=km;
+ document.getElementById("tkm").textContent=km+" km";document.getElementById("tkcal").textContent="~"+(kcal?Math.round(kcal/10)*10:0).toLocaleString("pt-BR");document.getElementById("tdays").textContent=done.length;
+ [["m7",best>=7],["m30",best>=30],["m92",done.length>=92],["m100",km>=100],["m500",km>=500],["m920",km>=920]].forEach(([id,on])=>document.getElementById(id).classList.toggle("on",on))
+}
+renderCalendars();updateStats();
+</script>
+<script>
+let deferredInstallPrompt=null;
+const installBtn=document.getElementById('installBtn');
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;if(installBtn)installBtn.style.display='block';});
+if(installBtn)installBtn.addEventListener('click',async()=>{if(!deferredInstallPrompt)return;deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;installBtn.style.display='none';});
+window.addEventListener('appinstalled',()=>{if(installBtn)installBtn.style.display='none';});
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.error));}
+</script>
+</body>
+</html>
